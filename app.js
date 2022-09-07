@@ -1,8 +1,8 @@
-const { default: inquirer } = require("inquirer");
+// const { default: inquirer } = require("inquirer");
 const inq = require("inquirer");
-// const fs = require("fs");
+const fs = require("fs");
 
-// const generateProfile = require("./src/page-template.js");
+const generateProjefcts = require("./src/page-template.js");
 
 //  const pageHTML = generateProfile(name, github)
 
@@ -142,10 +142,15 @@ const promptProject = (portfolioData) => {
     });
 };
 promptUser()
-  // .then((answers) => console.log(answers))
-  // .then(promptProject)
-  // .then((projectAnswers) => console.log(projectAnswers));
   .then(promptProject)
   .then((portfolioData) => {
-    console.log(portfolioData);
+    const pageHTML = generateProjefcts(portfolioData);
+
+    fs.writeFile("./index.html", pageHTML, (err) => {
+      if (err) throw new Error(err);
+
+      console.log(
+        "Page created! Check out index.html in this directory to see it!"
+      );
+    });
   });
